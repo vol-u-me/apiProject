@@ -1,12 +1,12 @@
 import json
-
+import allure
 from utils.api import GoogleMapsApi
 from utils.checking import Cheking
 """Create, edit and del new location"""
 
-
+@allure.epic('Test create place')
 class TestCreatePlace:
-
+    @allure.description('Test create, edit and delete new location')
     def test_create_new_place(self):
         print()
         print('POST method')
@@ -18,15 +18,12 @@ class TestCreatePlace:
         token = json.loads(result_post.text)
         Cheking.check_json_value(result_post, 'status', 'OK')
 
-
-
         print()
         print('GET method for check creation')
         result_get = GoogleMapsApi.check_create_new_place(place_id)
         Cheking.check_status_code(result_get, 200)
         Cheking.check_json_token(result_get, ['location', 'accuracy', 'name', 'phone_number', 'address', 'types', 'website', 'language'])
         Cheking.check_json_value(result_get, 'address', '29, side layout, cohen 09')
-
 
         print()
         print('PUT method')
@@ -58,4 +55,3 @@ class TestCreatePlace:
 
         print('___________________________________________________')
         print('create, edit and del new location testing completed')
-
